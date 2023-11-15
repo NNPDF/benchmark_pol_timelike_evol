@@ -3,7 +3,6 @@ import logging
 import pathlib
 import sys
 
-import numpy as np
 import pandas as pd
 import yaml
 from banana import toy
@@ -14,16 +13,13 @@ from cfg import (
     vfns_operator,
     vfns_rotate_to_LHA,
     vfns_theory,
+    xgrid,
 )
 
 import eko
 from eko.runner.managed import solve
 from ekobox import apply
 from ekomark.benchmark.external.LHA_utils import here as there
-
-
-# setup x rotation
-xgrid = np.array([1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 0.3, 0.5, 0.7, 0.9])
 
 
 # reference values
@@ -38,17 +34,17 @@ if __name__ == "__main__":
         "-v", "--verbose", help="Print eko log to screen", action="store_true"
     )
     args = parser.parse_args()
-    
+
     tab = 16
     # determine scheme
     if args.scheme == "FFNS":
         scheme = "FFNS"
-        t = ffns_theory(1.)
+        t = ffns_theory(1.0)
         o = ffns_operator
         part = 2
     elif args.scheme == "VFNS":
         scheme = "VFNS"
-        t = vfns_theory(1.)
+        t = vfns_theory(1.0)
         o = vfns_operator
         part = 3
     else:
@@ -75,7 +71,9 @@ if __name__ == "__main__":
     # apply PDF
     out = {}
     with eko.EKO.read(p) as eko_:
-        pdf = apply.apply_pdf_flavor(eko_, toy.mkPDF("ToyLH_polarized", 0), xgrid, rot, lab)
+        pdf = apply.apply_pdf_flavor(
+            eko_, toy.mkPDF("ToyLH_polarized", 0), xgrid, rot, lab
+        )
         for lab, f in list(pdf.values())[0]["pdfs"].items():
             out[lab] = xgrid * f
 

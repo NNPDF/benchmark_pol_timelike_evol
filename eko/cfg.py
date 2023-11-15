@@ -31,7 +31,7 @@ _t_vfns = dict(
     ),
     xif=1.0,
     n3lo_ad_variation=(0, 0, 0, 0),
-    matching_order=[2, 0],
+    matching_order=[0, 0],
 )
 
 
@@ -73,7 +73,7 @@ _o_vfns = dict(
         interpolation_is_log=True,
         scvar_method="exponentiated",
         inversion_method=None,
-        n_integration_cores=1,
+        n_integration_cores=-2,
         polarized=True,
         time_like=False,
     ),
@@ -117,3 +117,7 @@ vfns_rotate_to_LHA[6][br.flavor_basis_pids.index(-5)] = 1
 vfns_rotate_to_LHA[6][br.flavor_basis_pids.index(5)] = 1
 # g = g
 vfns_rotate_to_LHA[7][br.flavor_basis_pids.index(21)] = 1
+
+
+# setup x rotation
+xgrid = np.array([1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 0.3, 0.5, 0.7, 0.9])

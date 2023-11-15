@@ -14,6 +14,7 @@ from cfg import (
     vfns_operator,
     vfns_rotate_to_LHA,
     vfns_theory,
+    xgrid,
 )
 
 import eko
@@ -22,10 +23,6 @@ from ekobox import apply
 from ekomark.benchmark.external.LHA_utils import here as there
 
 _sqrt2 = float(np.sqrt(2))
-
-
-# setup x rotation
-xgrid = np.array([1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 0.3, 0.5, 0.7, 0.9])
 
 
 # reference values
@@ -73,11 +70,13 @@ if __name__ == "__main__":
         tab = 18
     else:
         raise ValueError("scheme has to be FFNS or VFNS")
+    t.order = (2, 0)
+    t.matching_order = (1, 0)
     lab = vfns_labels
     rot = vfns_rotate_to_LHA
 
     # eko path
-    p = pathlib.Path(f"{scheme}-{sv}.tar")
+    p = pathlib.Path(f"NLO-{scheme}-{sv}.tar")
 
     # recompute?
     if not p.exists() or args.rerun:
@@ -95,7 +94,9 @@ if __name__ == "__main__":
     # apply PDF
     out = {}
     with eko.EKO.read(p) as eko_:
-        pdf = apply.apply_pdf_flavor(eko_, toy.mkPDF("ToyLH_polarized", 0), xgrid, rot, lab)
+        pdf = apply.apply_pdf_flavor(
+            eko_, toy.mkPDF("ToyLH_polarized", 0), xgrid, rot, lab
+        )
         for lab, f in list(pdf.values())[0]["pdfs"].items():
             out[lab] = xgrid * f
 
