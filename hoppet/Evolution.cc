@@ -50,7 +50,6 @@ int main()
 
   for (int i = 0; i < (int) nloopv.size(); i++)
     {
-      // HOPPET
       vfnsv[i] ? hoppetSetPoleMassVFN(mc,mb,mt) : hoppetSetFFN(4);
       hoppetSetExactDGLAP(exact_nfthreshold,exact_splitting);
       hoppetStartExtended(ymax,dy,Qmin,Qmax,dlnlnQ,nloopv[i],order,factscheme_PolMSbar);

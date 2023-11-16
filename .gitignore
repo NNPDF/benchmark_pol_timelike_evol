@@ -171,3 +171,7 @@ Pegasus/Objects2/*.o
 # HOPPET junk
 hoppet/Evolution
 hoppet/Evolution.o
+
+# QCDNUM junk
+qcdnum/Evolution
+qcdnum/Evolution.o
