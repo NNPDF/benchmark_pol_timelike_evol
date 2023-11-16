@@ -162,3 +162,12 @@ cython_debug/
 # APFEL++ junk
 apfelxx/Evolution
 apfelxx/Evolution.o
+
+# PEGASUS-QCD junk
+Pegasus/*.x
+Pegasus/Objects1/*.o
+Pegasus/Objects2/*.o
+
+# HOPPET junk
+hoppet/Evolution
+hoppet/Evolution.o
