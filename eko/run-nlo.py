@@ -1,9 +1,9 @@
+"""Benchmark NLO tables from LHA."""
 import argparse
 import logging
 import pathlib
 import sys
 
-import numpy as np
 import pandas as pd
 import yaml
 from banana import toy
@@ -15,14 +15,13 @@ from cfg import (
     vfns_rotate_to_LHA,
     vfns_theory,
     xgrid,
+    SQRT2,
 )
 
-import eko
-from eko.runner.managed import solve
 from ekobox import apply
 from ekomark.benchmark.external.LHA_utils import here as there
-
-_sqrt2 = float(np.sqrt(2))
+from eko.runner.managed import solve
+import eko
 
 
 # reference values
@@ -45,11 +44,11 @@ if __name__ == "__main__":
         sv = "central"
         part = 1
     elif "up".startswith(args.sv):
-        xif = _sqrt2
+        xif = SQRT2
         sv = "up"
         part = 2
     elif "down".startswith(args.sv):
-        xif = 1.0 / _sqrt2
+        xif = 1.0 / SQRT2
         sv = "down"
         part = 3
     else:

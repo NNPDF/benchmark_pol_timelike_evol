@@ -1,3 +1,4 @@
+"""Benchmark LO tables from LHA."""
 import argparse
 import logging
 import pathlib
@@ -16,10 +17,10 @@ from cfg import (
     xgrid,
 )
 
-import eko
-from eko.runner.managed import solve
 from ekobox import apply
 from ekomark.benchmark.external.LHA_utils import here as there
+from eko.runner.managed import solve
+import eko
 
 
 # reference values

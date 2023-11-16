@@ -8,7 +8,7 @@ from eko.interpolation import lambertgrid
 from eko.io import runcards
 from eko.io.types import ReferenceRunning
 
-_sqrt2 = float(np.sqrt(2))
+SQRT2 = np.sqrt(2.0)
 
 # theory settings
 # ---------------
@@ -17,7 +17,7 @@ _t_vfns = dict(
     couplings=dict(
         alphas=0.35,
         alphaem=0.007496,
-        scale=_sqrt2,
+        scale=SQRT2,
         num_flavs_ref=3,
         max_num_flavs=6,
     ),
@@ -25,7 +25,7 @@ _t_vfns = dict(
         num_flavs_init=3,
         num_flavs_max_pdf=6,
         intrinsic_flavors=[],
-        masses=[ReferenceRunning([mq, nan]) for mq in (_sqrt2, 4.5, 175.0)],
+        masses=[ReferenceRunning([mq, nan]) for mq in (SQRT2, 4.5, 175.0)],
         masses_scheme="POLE",
         matching_ratios=[1.0, 1.0, 1.0],
     ),
@@ -62,7 +62,7 @@ def ffns_theory(xif=1.0):
 # operator settings
 # -----------------
 _o_vfns = dict(
-    mu0=_sqrt2,
+    mu0=SQRT2,
     mugrid=[(100.0, 5)],
     xgrid=lambertgrid(60).tolist(),
     configs=dict(
