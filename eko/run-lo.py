@@ -7,6 +7,10 @@ import sys
 import pandas as pd
 import yaml
 from banana import toy
+from ekobox import apply
+from ekomark.benchmark.external.LHA_utils import here as there
+
+import eko
 from cfg import (
     ffns_operator,
     ffns_theory,
@@ -16,12 +20,7 @@ from cfg import (
     vfns_theory,
     xgrid,
 )
-
-from ekobox import apply
-from ekomark.benchmark.external.LHA_utils import here as there
 from eko.runner.managed import solve
-import eko
-
 
 # reference values
 with open(there / "LHA_polarized.yaml", encoding="utf-8") as o:
