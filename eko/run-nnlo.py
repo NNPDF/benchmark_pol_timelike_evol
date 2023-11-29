@@ -1,4 +1,4 @@
-"""Benchmark NLO tables from LHA."""
+"""Generate NNLO tables."""
 import argparse
 import logging
 import pathlib
@@ -17,7 +17,6 @@ from cfg import (
     xgrid,
 )
 from ekobox import apply
-from utils import lha_data
 
 import eko
 from eko.runner.managed import solve
@@ -55,21 +54,21 @@ if __name__ == "__main__":
         scheme = "FFNS"
         t = ffns_theory(xif)
         o = ffns_operator
-        tab = 17
+        tab = 19
     elif args.scheme == "VFNS":
         scheme = "VFNS"
         t = vfns_theory(xif)
         o = vfns_operator
-        tab = 18
+        tab = 20
     else:
         raise ValueError("scheme has to be FFNS or VFNS")
-    t.order = (2, 0)
+    t.order = (3, 0)
     t.matching_order = (1, 0)
     lab = vfns_labels
     rot = vfns_rotate_to_LHA
 
     # eko path
-    p = pathlib.Path(f"NLO-{scheme}-{sv}.tar")
+    p = pathlib.Path(f"NNLO-{scheme}-{sv}.tar")
 
     # recompute?
     if not p.exists() or args.rerun:
@@ -100,9 +99,3 @@ if __name__ == "__main__":
     print(me)
     # dump to file
     me.to_csv(f"../results/eko-table{tab}-part{part}.csv")
-
-    # load reference
-    ref = lha_data(tab, part)
-    print()
-    print("rel. distance to reference")
-    print((me - ref) / ref)

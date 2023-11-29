@@ -1,28 +1,13 @@
+"""Runcard configurations."""
 import copy
 from math import inf, nan
 
 import numpy as np
-import pandas as pd
-import yaml
-from ekomark.benchmark.external.LHA_utils import here as there
 
 from eko import basis_rotation as br
 from eko.interpolation import lambertgrid
 from eko.io import runcards
 from eko.io.types import ReferenceRunning
-
-# reference values
-with open(there / "LHA_polarized.yaml", encoding="utf-8") as o:
-    ref_data = yaml.safe_load(o)
-
-
-def lha_data(tab: str, part: str) -> pd.DataFrame:
-    df = pd.DataFrame(ref_data[f"table{tab}"][f"part{part}"])
-    df["d_v"] *= -1.0
-    df["L_m"] *= -2.0
-    df["L_p"] *= -1.0
-    return df
-
 
 SQRT2 = np.sqrt(2.0)
 

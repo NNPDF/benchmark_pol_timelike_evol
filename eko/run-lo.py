@@ -9,7 +9,6 @@ from banana import toy
 from cfg import (
     ffns_operator,
     ffns_theory,
-    lha_data,
     vfns_labels,
     vfns_operator,
     vfns_rotate_to_LHA,
@@ -17,6 +16,7 @@ from cfg import (
     xgrid,
 )
 from ekobox import apply
+from utils import lha_data
 
 import eko
 from eko.runner.managed import solve

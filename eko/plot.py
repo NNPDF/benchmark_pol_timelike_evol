@@ -1,35 +1,12 @@
 """Compare tables against eachother."""
 import argparse
-import dataclasses
-import pathlib
 
 import matplotlib.pyplot as plt
-import pandas as pd
-from cfg import lha_data, xgrid
+from cfg import xgrid
 from matplotlib.figure import Figure
+from utils import Elem, here, load_data
 
-here = pathlib.Path(__file__).parent
-res = here.parent / "results"
 plots = here / "plots"
-
-
-@dataclasses.dataclass(frozen=True)
-class Elem:
-    """A given calculation."""
-
-    name: str
-    data: pd.DataFrame
-
-
-def load_data(name: str, tab: int, part: int) -> Elem:
-    """Load and normalize data."""
-    if name.lower() == "lha":
-        df = lha_data(tab, part)
-    else:
-        p = res / f"{name}-table{tab}-part{part}.csv"
-        df = pd.read_csv(p)
-        df = df.drop(df.axes[1][0], axis=1)
-    return Elem(name, df)
 
 
 def plot(a: Elem, b: Elem) -> Figure:
