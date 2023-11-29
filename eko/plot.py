@@ -5,9 +5,8 @@ import pathlib
 
 import matplotlib.pyplot as plt
 import pandas as pd
+from cfg import lha_data, xgrid
 from matplotlib.figure import Figure
-
-from cfg import xgrid
 
 here = pathlib.Path(__file__).parent
 res = here.parent / "results"
@@ -24,14 +23,12 @@ class Elem:
 
 def load_data(name: str, tab: int, part: int) -> Elem:
     """Load and normalize data."""
-    p = res / f"{name}-table{tab}-part{part}.csv"
-    df = pd.read_csv(p)
-    # fix d_v, L_m, and L_p to be consistent with unpolarized
-    if name != "eko":
-        df["d_v"] *= -1.0
-        df["L_m"] *= -0.5
-        df["L_p"] *= -1.0
-    df = df.drop(df.axes[1][0], axis=1)
+    if name.lower() == "lha":
+        df = lha_data(tab, part)
+    else:
+        p = res / f"{name}-table{tab}-part{part}.csv"
+        df = pd.read_csv(p)
+        df = df.drop(df.axes[1][0], axis=1)
     return Elem(name, df)
 
 
@@ -51,7 +48,8 @@ def plot(a: Elem, b: Elem) -> Figure:
     return fig
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """CLI entry point"""
     parser = argparse.ArgumentParser()
     parser.add_argument("table", help="LH table")
     parser.add_argument("part", help="table part")
@@ -62,3 +60,7 @@ if __name__ == "__main__":
     fig = plot(a, b)
     fig.savefig(plots / f"table{args.table}-part{args.part}.pdf")
     plt.close(fig)
+
+
+if __name__ == "__main__":
+    main()

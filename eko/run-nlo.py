@@ -5,27 +5,22 @@ import pathlib
 import sys
 
 import pandas as pd
-import yaml
 from banana import toy
-from ekobox import apply
-from ekomark.benchmark.external.LHA_utils import here as there
-
-import eko
 from cfg import (
     SQRT2,
     ffns_operator,
     ffns_theory,
+    lha_data,
     vfns_labels,
     vfns_operator,
     vfns_rotate_to_LHA,
     vfns_theory,
     xgrid,
 )
-from eko.runner.managed import solve
+from ekobox import apply
 
-# reference values
-with open(there / "LHA_polarized.yaml", encoding="utf-8") as o:
-    ref_data = yaml.safe_load(o)
+import eko
+from eko.runner.managed import solve
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -107,7 +102,7 @@ if __name__ == "__main__":
     me.to_csv(f"../results/eko-table{tab}-part{part}.csv")
 
     # load reference
-    ref = pd.DataFrame(ref_data[f"table{tab}"][f"part{part}"])
+    ref = lha_data(tab, part)
     print()
     print("rel. distance to reference")
     print((me - ref) / ref)

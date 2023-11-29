@@ -2,11 +2,27 @@ import copy
 from math import inf, nan
 
 import numpy as np
+import pandas as pd
+import yaml
+from ekomark.benchmark.external.LHA_utils import here as there
 
 from eko import basis_rotation as br
 from eko.interpolation import lambertgrid
 from eko.io import runcards
 from eko.io.types import ReferenceRunning
+
+# reference values
+with open(there / "LHA_polarized.yaml", encoding="utf-8") as o:
+    ref_data = yaml.safe_load(o)
+
+
+def lha_data(tab: str, part: str) -> pd.DataFrame:
+    df = pd.DataFrame(ref_data[f"table{tab}"][f"part{part}"])
+    df["d_v"] *= -1.0
+    df["L_m"] *= -2.0
+    df["L_p"] *= -1.0
+    return df
+
 
 SQRT2 = np.sqrt(2.0)
 
@@ -91,6 +107,8 @@ ffns_operator = runcards.OperatorCard.from_dict(_o_ffns)
 
 # flavor rotations
 # ----------------
+# Let's use the normalization of Table 16+18 - note that Table 17
+# is again different ... sigh
 
 vfns_labels = ["u_v", "d_v", "L_m", "L_p", "s_p", "c_p", "b_p", "g"]
 vfns_rotate_to_LHA = np.zeros((len(vfns_labels), 14))
@@ -98,14 +116,14 @@ vfns_rotate_to_LHA = np.zeros((len(vfns_labels), 14))
 vfns_rotate_to_LHA[0][br.flavor_basis_pids.index(-2)] = -1
 vfns_rotate_to_LHA[0][br.flavor_basis_pids.index(2)] = 1
 # d_v = d - dbar
-vfns_rotate_to_LHA[1][br.flavor_basis_pids.index(-1)] = -1
-vfns_rotate_to_LHA[1][br.flavor_basis_pids.index(1)] = 1
+vfns_rotate_to_LHA[1][br.flavor_basis_pids.index(-1)] = -1 * -1
+vfns_rotate_to_LHA[1][br.flavor_basis_pids.index(1)] = 1 * -1
 # L_- = dbar - ubar
-vfns_rotate_to_LHA[2][br.flavor_basis_pids.index(-1)] = 1
-vfns_rotate_to_LHA[2][br.flavor_basis_pids.index(-2)] = -1
+vfns_rotate_to_LHA[2][br.flavor_basis_pids.index(-1)] = 1 * -2
+vfns_rotate_to_LHA[2][br.flavor_basis_pids.index(-2)] = -1 * -2
 # 2L_+ = 2dbar + 2ubar
-vfns_rotate_to_LHA[3][br.flavor_basis_pids.index(-1)] = 2
-vfns_rotate_to_LHA[3][br.flavor_basis_pids.index(-2)] = 2
+vfns_rotate_to_LHA[3][br.flavor_basis_pids.index(-1)] = 2 * -1
+vfns_rotate_to_LHA[3][br.flavor_basis_pids.index(-2)] = 2 * -1
 # s_+ = s + sbar
 vfns_rotate_to_LHA[4][br.flavor_basis_pids.index(-3)] = 1
 vfns_rotate_to_LHA[4][br.flavor_basis_pids.index(3)] = 1
