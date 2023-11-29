@@ -53,12 +53,14 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("table", help="LH table")
     parser.add_argument("part", help="table part")
+    parser.add_argument("a", help="first operand")
+    parser.add_argument("b", help="second operand")
     args = parser.parse_args()
 
-    a = load_data("eko", args.table, args.part)
-    b = load_data("apfelxx", args.table, args.part)
+    a = load_data(args.a, args.table, args.part)
+    b = load_data(args.b, args.table, args.part)
     fig = plot(a, b)
-    fig.savefig(plots / f"table{args.table}-part{args.part}.pdf")
+    fig.savefig(plots / f"table{args.table}-part{args.part}-{args.a}-{args.b}.pdf")
     plt.close(fig)
 
 
