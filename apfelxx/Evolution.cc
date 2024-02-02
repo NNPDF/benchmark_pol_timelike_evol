@@ -34,11 +34,11 @@ int main()
   const std::vector<double> ThsNF3  = {0, 0, 0};
 
   // Tables 16-17-18 of https://arxiv.org/pdf/hep-ph/0511119.pdf
-  const std::vector<int> ptov{0, 0, 1, 1, 1, 1, 1, 1};
-  const std::vector<std::vector<double>> Massesv{MassesNF4, MassesVFN, MassesNF4, MassesNF4, MassesNF4, MassesVFN, MassesVFN, MassesVFN};
-  const std::vector<std::vector<double>> Thresholdsv{ThsNF4, ThsVFN, ThsNF4, ThsNF4, ThsNF4, ThsVFN, ThsVFNt, ThsVFNh};
-  const std::vector<std::vector<double>> ThresholdsRefv{ThsNF4, ThsNF3, ThsNF4, ThsNF4, ThsNF4, ThsNF3, ThsNF3, ThsNF3};
-  const std::vector<double> xiv{1, 1, 1, sqrt(2), sqrt(0.5), 1, sqrt(2), sqrt(0.5)};
+  const std::vector<int> ptov{0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2};
+  const std::vector<std::vector<double>> Massesv{MassesNF4, MassesVFN, MassesNF4, MassesNF4, MassesNF4, MassesVFN, MassesVFN, MassesVFN, MassesNF4, MassesNF4, MassesNF4, MassesVFN, MassesVFN, MassesVFN};
+  const std::vector<std::vector<double>> Thresholdsv{ThsNF4, ThsVFN, ThsNF4, ThsNF4, ThsNF4, ThsVFN, ThsVFNt, ThsVFNh, ThsNF4, ThsNF4, ThsNF4, ThsVFN, ThsVFNt, ThsVFNh};
+  const std::vector<std::vector<double>> ThresholdsRefv{ThsNF4, ThsNF3, ThsNF4, ThsNF4, ThsNF4, ThsNF3, ThsNF3, ThsNF3, ThsNF4, ThsNF4, ThsNF4, ThsNF3, ThsNF3, ThsNF3};
+  const std::vector<double> xiv{1, 1, 1, sqrt(2), sqrt(0.5), 1, sqrt(2), sqrt(0.5), 1, sqrt(2), sqrt(0.5), 1, sqrt(2), sqrt(0.5)};
   const std::vector<std::string> fnamev{
     "../results/apfelxx-table16-part2.csv",
     "../results/apfelxx-table16-part3.csv",
@@ -47,7 +47,13 @@ int main()
     "../results/apfelxx-table17-part3.csv",
     "../results/apfelxx-table18-part1.csv",
     "../results/apfelxx-table18-part2.csv",
-    "../results/apfelxx-table18-part3.csv"
+    "../results/apfelxx-table18-part3.csv",
+    "../results/apfelxx-table19-part1.csv",
+    "../results/apfelxx-table19-part2.csv",
+    "../results/apfelxx-table19-part3.csv",
+    "../results/apfelxx-table20-part1.csv",
+    "../results/apfelxx-table20-part2.csv",
+    "../results/apfelxx-table20-part3.csv"
       };
 
   for (int i = 0; i < (int) ptov.size(); i++)
