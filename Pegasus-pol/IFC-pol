@@ -1,0 +1,40 @@
+ifort -o polevol.x -O2 evolpol.f usrpinit.f usrpinp.f \
+\
+Objects2/betafct.o \
+Objects2/psifcts.o \
+Objects2/pnsg0mom.o \
+Objects2/lsgmom.o \
+Objects2/usg1mom.o \
+Objects2/usg1hmom.o \
+Objects2/uns2mom.o \
+Objects2/usg2mom.o \
+Objects2/usg2hmom.o \
+\
+Objects2/ebetafct.o \
+Objects2/evnfthr.o \
+Objects2/asmatch.o \
+\
+Objects2/asrgkt.o \
+Objects2/ensg0n.o \
+Objects2/ens1n.o \
+Objects2/esg1n.o \
+Objects2/ens2n.o \
+Objects2/esg2n.o \
+Objects2/evnvfn.o \
+Objects2/evnffn.o \
+Objects2/xparton.o \
+\
+Objects2/ancont.o \
+Objects2/initpol.o \
+Objects2/psg0pmom.o \
+Objects2/pns1pmom.o \
+Objects2/psg1pmom.o \
+Objects2/pns2pmom.o \
+Objects2/psg2pmom.o \
+Objects2/ans2pmom.o \
+Objects2/asg2pmom.o \
+Objects2/initpinp.o \
+Objects2/inppmom1.o \
+Objects2/inppmom2.o \
+-ld_classic
+
