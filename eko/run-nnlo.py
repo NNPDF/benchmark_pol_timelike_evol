@@ -21,9 +21,11 @@ from ekobox import apply
 import eko
 from eko.runner.managed import solve
 
-if __name__ == "__main__":
+
+def main():
+    """CLI entry point."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("scheme", help="FFNS or VFNS?")
+    parser.add_argument("scheme", help="FFNS or aVFNS or VFNS?")
     parser.add_argument("sv", help="scale variation: up, central, or down")
     parser.add_argument("--rerun", help="Rerun eko", action="store_true")
     parser.add_argument(
@@ -50,36 +52,40 @@ if __name__ == "__main__":
         )
 
     # determine scheme
+    matching_qcd = 2
     if args.scheme == "FFNS":
-        scheme = "FFNS"
         t = ffns_theory(xif)
         o = ffns_operator
         tab = 19
-    elif args.scheme == "VFNS":
-        scheme = "VFNS"
+    elif args.scheme == "aVFNS":
         t = vfns_theory(xif)
         o = vfns_operator
         tab = 20
+        matching_qcd = 1
+    elif args.scheme == "VFNS":
+        t = vfns_theory(xif)
+        o = vfns_operator
+        tab = 21
     else:
-        raise ValueError("scheme has to be FFNS or VFNS")
+        raise ValueError("scheme has to be FFNS or aVFNS or VFNS")
     t.order = (3, 0)
-    t.matching_order = (1, 0)
+    t.matching_order = (matching_qcd, 0)
     lab = vfns_labels
     rot = vfns_rotate_to_LHA
 
     # eko path
-    p = pathlib.Path(f"NNLO-{scheme}-{sv}.tar")
+    p = pathlib.Path(f"NNLO-{args.scheme}-{sv}.tar")
 
     # recompute?
     if not p.exists() or args.rerun:
         print("(Re)running eko ...")
         p.unlink(True)
         if args.verbose:
-            logStdout = logging.StreamHandler(sys.stdout)
-            logStdout.setLevel(logging.INFO)
-            logStdout.setFormatter(logging.Formatter("%(message)s"))
+            log_stdout = logging.StreamHandler(sys.stdout)
+            log_stdout.setLevel(logging.INFO)
+            log_stdout.setFormatter(logging.Formatter("%(message)s"))
             logging.getLogger("eko").handlers = []
-            logging.getLogger("eko").addHandler(logStdout)
+            logging.getLogger("eko").addHandler(log_stdout)
             logging.getLogger("eko").setLevel(logging.INFO)
         solve(t, o, p)
 
@@ -99,3 +105,7 @@ if __name__ == "__main__":
     print(me)
     # dump to file
     me.to_csv(f"../results/eko-table{tab}-part{part}.csv")
+
+
+if __name__ == "__main__":
+    main()
