@@ -76,8 +76,9 @@
          IF (K1 .EQ. 1) WRITE (6,13)
   13     FORMAT (2X,'x',8X,'xu_v',7X,'xd_v',7X,'xL_-',7X,'xL_+',
      ,           7X,'xs_+',7X,'xc_+',7X,'xb_+',7X,'xg',/)
-         WRITE (6,14) X, PDFX(1), PDFX(2), LMI, LPL, PDFX(-3),
-     ,                   PDFX(-4), PDFX(-5), PDFX(0)
+c ... IB output for benchmark:
+         WRITE (6,14) X, PDFX(1), -PDFX(2), -2D0*LMI, -LPL, PDFX(-3),
+     ,                   PDFX(-4),PDFX(-5), PDFX(0)
   14     FORMAT (1PE6.0,1X,8(1PE14.6))
          END IF
 * 
