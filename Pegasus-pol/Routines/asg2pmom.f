@@ -72,9 +72,11 @@
        S22 = S21 + N2I*N2I
 *
       CALL BET(N1,V1) 
-      CALL BET1(N1,V2) 
-      CALL BET2(N1,V3) 
-      CALL BET3(N1,V4)
+c      CALL BET1(N1,V2) 
+c      CALL BET2(N1,V3)
+
+      V2 = (DPSI((N1+1)/2.d0,1) - DPSI(N1/2.d0,1))/4.d0
+      V3 = (DPSI((N1+1)/2.d0,2) - DPSI(N1/2.d0,2))/8.d0       
 *
 *             
 * ..The moments of the OME's DA_Hq^{PS,(2)} and DA_Hg^{S,(2)} given in 
