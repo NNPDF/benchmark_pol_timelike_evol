@@ -25,9 +25,12 @@ LDFLAGS  += $(LHAPDFINCS) $(APFELINCS) $(APFELPPINCS)
 CLIBS += $(LHAPDFLIBS) $(APFELLIBS) $(APFELPPLIBS) $(MELALIBS)
 
 install : all
-all : Evolution
+all : EvolutionPol EvolutionTL
 
-Evolution: Evolution.o
+EvolutionPol: EvolutionPol.o
+	$(CXX) $(LDFLAGS) -o $@ $< $(CLIBS)
+
+EvolutionTL: EvolutionTL.o
 	$(CXX) $(LDFLAGS) -o $@ $< $(CLIBS)
 
 .SUFFIXES : .cc .o .f .c
@@ -39,4 +42,4 @@ Evolution: Evolution.o
 	$(F77)  -c $< 
 
 clean:
-	rm -rf *.lo *.o *.la Evolution *~
+	rm -rf *.lo *.o *.la EvolutionPol EvolutionTL *~

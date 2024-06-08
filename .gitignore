@@ -160,8 +160,10 @@ cython_debug/
 #.idea/
 
 # APFEL++ junk
-apfelxx/Evolution
-apfelxx/Evolution.o
+apfelxx/EvolutionPol
+apfelxx/EvolutionPol.o
+apfelxx/EvolutionTL
+apfelxx/EvolutionTL.o
 
 # PEGASUS-QCD junk
 Pegasus/*.x
