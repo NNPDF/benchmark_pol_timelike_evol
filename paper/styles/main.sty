@@ -1,0 +1,58 @@
+\RequirePackage{tabularx}
+\RequirePackage{hepnames}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{csquotes}
+\RequirePackage{wasysym}
+\RequirePackage{bm}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{xcolor}
+\RequirePackage{pifont}
+\RequirePackage{multirow}
+\RequirePackage{colortbl}
+\RequirePackage{pdflscape}
+
+\RequirePackage[capitalise]{cleveref}
+\RequirePackage[status=draft,inline,nomargin,marginclue]{fixme}
+%\usepackage[status=final]{fixme}
+\fxusetheme{color}
+\FXRegisterAuthor{fh}{afh}{FH}
+\FXRegisterAuthor{gm}{agm}{GM}
+
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\sisetup{
+    retain-unity-mantissa = false
+}
+
+
+\setlist[description]{font=\quad\normalfont\itshape\space}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.98}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=tb,
+    framerule=0.1pt
+}
+
+\lstset{style=mystyle}
