@@ -31,12 +31,13 @@ class Elem:
     data: pd.DataFrame
 
 
-def load_data(name: str, tab: int, part: int) -> Elem:
+def load_data(name: str, tab: int, part: int, tl: bool = False) -> Elem:
     """Load data from disk or ekomark."""
     if name.lower() == "lha":
         df = lha_data(tab, part)
     else:
-        p = res / f"{name}-table{tab}-part{part}.csv"
+        suffix = "-tl" if tl else ""
+        p = res / f"{name}-table{tab}-part{part}{suffix}.csv"
         df = pd.read_csv(p)
         df = df.drop(df.axes[1][0], axis=1)
     return Elem(name, df)

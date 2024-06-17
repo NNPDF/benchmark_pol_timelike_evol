@@ -3,6 +3,7 @@ import copy
 from math import inf, nan
 
 import numpy as np
+import numpy.typing as npt
 
 from eko import basis_rotation as br
 from eko.interpolation import lambertgrid
@@ -83,11 +84,28 @@ _o_vfns = dict(
         skip_non_singlet=False,
     ),
 )
-vfns_operator = runcards.OperatorCard.from_dict(_o_vfns)
+
+
+def vfns_operator(tl: bool = False) -> runcards.OperatorCard:
+    """Generate a VFNS operator card."""
+    oo = copy.deepcopy(_o_vfns)
+    if tl:
+        oo["configs"]["polarized"] = False
+        oo["configs"]["time_like"] = True
+    return runcards.OperatorCard.from_dict(oo)
+
 
 _o_ffns = copy.deepcopy(_o_vfns)
 _o_ffns["mugrid"] = [(100.0, 4)]
-ffns_operator = runcards.OperatorCard.from_dict(_o_ffns)
+
+
+def ffns_operator(tl: bool = False) -> runcards.OperatorCard:
+    """Generate a FFNS operator card."""
+    oo = copy.deepcopy(_o_ffns)
+    if tl:
+        oo["configs"]["polarized"] = False
+        oo["configs"]["time_like"] = True
+    return runcards.OperatorCard.from_dict(oo)
 
 
 # flavor rotations
@@ -123,4 +141,10 @@ vfns_rotate_to_LHA[7][br.flavor_basis_pids.index(21)] = 1
 
 
 # setup x rotation
-xgrid = np.array([1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 0.3, 0.5, 0.7, 0.9])
+def xgrid(tl: bool = False) -> npt.NDArray:
+    """Generate target grid."""
+    if tl:
+        return np.array(
+            [1e-2, 5e-2, 1e-1, 2e-1, 3e-1, 4e-1, 5e-1, 6e-1, 7e-1, 8e-1, 9e-1]
+        )
+    return np.array([1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 0.1, 0.3, 0.5, 0.7, 0.9])

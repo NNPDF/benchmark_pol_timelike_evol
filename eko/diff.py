@@ -28,11 +28,14 @@ def main() -> None:
     parser.add_argument(
         "--combined-abs", help="Combined check abs. epsilon", default=1e-5, type=float
     )
+    parser.add_argument(
+        "-tl", "--timelike", action="store_true", help="Time-like evolution?"
+    )
     args = parser.parse_args()
 
     # load
-    a = load_data(args.a, args.table, args.part)
-    b = load_data(args.b, args.table, args.part)
+    a = load_data(args.a, args.table, args.part, args.timelike)
+    b = load_data(args.b, args.table, args.part, args.timelike)
     # print absolute values
     for opt, el in ((args.print_a, a), (args.print_b, b)):
         if opt:
