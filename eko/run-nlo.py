@@ -1,4 +1,5 @@
 """Benchmark NLO tables from LHA."""
+
 import argparse
 import logging
 import pathlib
@@ -22,15 +23,20 @@ from utils import lha_data
 import eko
 from eko.runner.managed import solve
 
-if __name__ == "__main__":
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("scheme", help="FFNS or VFNS?")
+    parser.add_argument(
+        "-tl", "--timelike", action="store_true", help="Time-like evolution?"
+    )
     parser.add_argument("sv", help="scale variation: up, central, or down")
     parser.add_argument("--rerun", help="Rerun eko", action="store_true")
     parser.add_argument(
         "-v", "--verbose", help="Print eko log to screen", action="store_true"
     )
     args = parser.parse_args()
+    suffix = "-tl" if args.timelike else ""
 
     # determine xif
     if "central".startswith(args.sv):
@@ -54,12 +60,12 @@ if __name__ == "__main__":
     if args.scheme == "FFNS":
         scheme = "FFNS"
         t = ffns_theory(xif)
-        o = ffns_operator
+        o = ffns_operator(args.timelike)
         tab = 17
     elif args.scheme == "VFNS":
         scheme = "VFNS"
         t = vfns_theory(xif)
-        o = vfns_operator
+        o = vfns_operator(args.timelike)
         tab = 18
     else:
         raise ValueError("scheme has to be FFNS or VFNS")
@@ -69,7 +75,7 @@ if __name__ == "__main__":
     rot = vfns_rotate_to_LHA
 
     # eko path
-    p = pathlib.Path(f"NLO-{scheme}-{sv}.tar")
+    p = pathlib.Path(f"NLO-{scheme}-{sv}{suffix}.tar")
 
     # recompute?
     if not p.exists() or args.rerun:
@@ -86,12 +92,17 @@ if __name__ == "__main__":
 
     # apply PDF
     out = {}
+    xgrid_ = xgrid(args.timelike)
     with eko.EKO.read(p) as eko_:
         pdf = apply.apply_pdf_flavor(
-            eko_, toy.mkPDF("ToyLH_polarized", 0), xgrid, rot, lab
+            eko_,
+            toy.mkPDF("ToyFF_unpolarized" if args.timelike else "ToyLH_polarized", 0),
+            xgrid_,
+            rot,
+            lab,
         )
         for lab, f in list(pdf.values())[0]["pdfs"].items():
-            out[lab] = xgrid * f
+            out[lab] = xgrid_ * f
 
     # display result
     pd.set_option("display.float_format", "{:.4e}".format)
@@ -99,10 +110,15 @@ if __name__ == "__main__":
     print("EKO")
     print(me)
     # dump to file
-    me.to_csv(f"../results/eko-table{tab}-part{part}.csv")
+    me.to_csv(f"../results/eko-table{tab}-part{part}{suffix}.csv")
 
-    # load reference
-    ref = lha_data(tab, part)
-    print()
-    print("rel. distance to reference")
-    print((me - ref) / ref)
+    if not args.timelike:
+        # load reference
+        ref = lha_data(tab, part)
+        print()
+        print("rel. distance to reference")
+        print((me - ref) / ref)
+
+
+if __name__ == "__main__":
+    main()

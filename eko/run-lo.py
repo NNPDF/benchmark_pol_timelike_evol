@@ -1,4 +1,5 @@
 """Benchmark LO tables from LHA."""
+
 import argparse
 import logging
 import pathlib
