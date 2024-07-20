@@ -57,8 +57,8 @@ def main() -> None:
         print(
             f"combined difference {a.name} to {b.name} with rel. < {args.combined_rel} and abs. < {args.combined_abs}"
         )
-        rel_e = ((a.data - b.data) / b.data) < args.combined_rel
-        abs_e = (a.data - b.data) < args.combined_abs
+        rel_e = abs((a.data - b.data) / b.data) < args.combined_rel
+        abs_e = abs(a.data - b.data) < args.combined_abs
         print(rel_e | abs_e)
 
 
