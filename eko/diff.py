@@ -55,7 +55,8 @@ def main() -> None:
     # combined table
     if args.print_combined:
         print(
-            f"combined difference {a.name} to {b.name} with rel. < {args.combined_rel} and abs. < {args.combined_abs}"
+            f"combined difference {a.name} to {b.name} with"
+            f" |rel.| < {args.combined_rel} or |abs.| < {args.combined_abs}"
         )
         rel_e = abs((a.data - b.data) / b.data) < args.combined_rel
         abs_e = abs(a.data - b.data) < args.combined_abs
