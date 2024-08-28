@@ -20,12 +20,15 @@ HOPPETLIBS = $(shell hoppet-config --libs)
 CXXFLAGS += $(APFELPPINCS) $(LHAPDFINCS) $(HOPPETINCS)
 LDFLAGS  += $(APFELPPINCS) $(LHAPDFINCS) $(HOPPETINCS)
 
-CLIBS += $(APFELPPLIBS) $(LHAPDFLIBS) $(HOPPETLIBS) -L/usr/local/Cellar/gcc/13.2.0/lib/gcc/current/ -lgfortran
+CLIBS += $(APFELPPLIBS) $(LHAPDFLIBS) $(HOPPETLIBS) -L/usr/local/Cellar/gcc/14.2.0/lib/gcc/current/ -lgfortran
 
 install : all
-all : Evolution
+all : EvolutionPol EvolutionTL
 
-Evolution: Evolution.o
+EvolutionPol: EvolutionPol.o
+	$(CXX) $(LDFLAGS) -o $@ $< $(CLIBS)
+
+EvolutionTL: EvolutionTL.o
 	$(CXX) $(LDFLAGS) -o $@ $< $(CLIBS)
 
 .SUFFIXES : .cc .o .f .c .f90
@@ -40,5 +43,5 @@ Evolution: Evolution.o
 	$(FC) $(LDFLAGS) -c $<
 
 clean:
-	rm -rf *.lo *.o *.la Evolution *~
+	rm -rf *.lo *.o *.la EvolutionPol EvolutionTL *~
 
