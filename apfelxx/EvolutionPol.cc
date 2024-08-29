@@ -51,9 +51,9 @@ int main()
     "../results/apfelxx-table19-part1.csv",
     "../results/apfelxx-table19-part2.csv",
     "../results/apfelxx-table19-part3.csv",
-    "../results/apfelxx-table20-part1.csv",
-    "../results/apfelxx-table20-part2.csv",
-    "../results/apfelxx-table20-part3.csv"
+    "../results/apfelxx-table21-part1.csv",
+    "../results/apfelxx-table21-part2.csv",
+    "../results/apfelxx-table21-part3.csv"
       };
 
   for (int i = 0; i < (int) ptov.size(); i++)
