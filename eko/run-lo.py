@@ -76,11 +76,11 @@ def main():
         pdf = apply.apply_pdf_flavor(
             eko_,
             toy.mkPDF("ToyFF_unpolarized" if args.timelike else "ToyLH_polarized", 0),
+            lab,
             xgrid_,
             rot,
-            lab,
         )
-        for lab, f in list(pdf.values())[0]["pdfs"].items():
+        for lab, f in list(pdf[0].values())[0].items():
             out[lab] = xgrid_ * f
 
     # display result

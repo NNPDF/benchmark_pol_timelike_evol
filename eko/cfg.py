@@ -1,4 +1,5 @@
 """Runcard configurations."""
+
 import copy
 from math import inf, nan
 
@@ -16,17 +17,8 @@ SQRT2 = np.sqrt(2.0)
 # ---------------
 _t_vfns = dict(
     order=[1, 0],
-    couplings=dict(
-        alphas=0.35,
-        alphaem=0.007496,
-        scale=SQRT2,
-        num_flavs_ref=3,
-        max_num_flavs=6,
-    ),
+    couplings=dict(alphas=0.35, alphaem=0.007496, ref=[SQRT2, 3]),
     heavy=dict(
-        num_flavs_init=3,
-        num_flavs_max_pdf=6,
-        intrinsic_flavors=[],
         masses=[ReferenceRunning([mq, nan]) for mq in (SQRT2, 4.5, 175.0)],
         masses_scheme="POLE",
         matching_ratios=[1.0, 1.0, 1.0],
@@ -45,8 +37,7 @@ def vfns_theory(xif=1.0):
 
 
 _t_ffns = copy.deepcopy(_t_vfns)
-_t_ffns["couplings"]["num_flavs_ref"] = 4
-_t_ffns["heavy"]["num_flavs_init"] = 4
+_t_ffns["couplings"]["ref"][1] = 4
 _t_ffns["heavy"]["masses"] = [
     ReferenceRunning([0, nan]),
     ReferenceRunning([inf, nan]),
@@ -64,7 +55,7 @@ def ffns_theory(xif=1.0):
 # operator settings
 # -----------------
 _o_vfns = dict(
-    mu0=SQRT2,
+    init=[SQRT2, 3],
     mugrid=[(100.0, 5)],
     xgrid=lambertgrid(60).tolist(),
     configs=dict(
@@ -97,6 +88,7 @@ def vfns_operator(tl: bool = False) -> runcards.OperatorCard:
 
 _o_ffns = copy.deepcopy(_o_vfns)
 _o_ffns["mugrid"] = [(100.0, 4)]
+_o_ffns["init"][1] = 4
 
 
 def ffns_operator(tl: bool = False) -> runcards.OperatorCard:

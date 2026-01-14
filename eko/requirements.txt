@@ -1,2 +1,1 @@
-eko[mark,box]==0.14.3
-banana-hep==0.6.15
+eko[mark,box]
