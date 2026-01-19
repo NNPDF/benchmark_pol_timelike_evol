@@ -11,7 +11,7 @@ from eko.interpolation import lambertgrid
 from eko.io import runcards
 from eko.io.types import ReferenceRunning
 
-SQRT2 = np.sqrt(2.0)
+SQRT2 = float(np.sqrt(2.0))
 
 # theory settings
 # ---------------

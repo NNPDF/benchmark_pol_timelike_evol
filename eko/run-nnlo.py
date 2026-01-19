@@ -64,7 +64,7 @@ def main():
         tab = 19
     elif args.scheme == "aVFNS":
         t = vfns_theory(xif)
-        o = vfns_operator
+        o = vfns_operator(args.timelike)
         tab = 20
         matching_qcd = 1
     elif args.scheme == "VFNS":
